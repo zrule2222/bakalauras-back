@@ -26,6 +26,15 @@ import {
   returnAllServices,
 } from "../controllers/ServiceController.js"
 
+import {
+  registerNewUserGuest,
+  returnUserRegistrations,
+  cancelGuestRegistration,
+  returnActiveRegistrations,
+  updateGuestRegistrationStatus,
+  returnConfirmedRegistrations,
+} from "../controllers/GuestController.js"
+
 //init express router
 const router = express.Router();
 
@@ -51,6 +60,18 @@ router.put("/updateUser/:id", updateUserInfo);
 router.get("/authenticate", AuthentificateUser);
 
 router.get("/services", returnAllServices);
+
+router.post("/registerGuest", registerNewUserGuest);
+
+router.get("/guestRegistrations/:id", returnUserRegistrations);
+
+router.put("/cancelGuest/:id", cancelGuestRegistration);
+
+router.get("/activeGuests", returnActiveRegistrations);
+
+router.put("/updateGuest/:id", updateGuestRegistrationStatus);
+
+router.get("/confirmedGuests", returnConfirmedRegistrations);
 
 // //get single product
 // router.get("/products/:id", showProductById);
