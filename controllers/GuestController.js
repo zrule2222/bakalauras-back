@@ -75,7 +75,8 @@ export const registerNewUserGuest = (req, res) => {
     const status = req.body;
     let updateData = {
         id: id,
-        status: status.status
+        status: status.status,
+        doorKeeper_id: status.doorKeeper_id
     }
     updateGuestRegistrationStatusById(updateData, (err, results) => {
       if (err) {

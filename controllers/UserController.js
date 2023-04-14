@@ -90,7 +90,6 @@ var jwt = require('jsonwebtoken');
   };
 
   export const AuthentificateUser = (req, res) => {
-    console.log(req)
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
     if (token == null){
@@ -101,7 +100,6 @@ var jwt = require('jsonwebtoken');
         res.sendStatus(401)
       }
       else{
-        console.log(decoded)
         res.json(decoded);
       }
     })

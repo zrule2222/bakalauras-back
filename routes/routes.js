@@ -34,6 +34,15 @@ import {
   updateGuestRegistrationStatus,
   returnConfirmedRegistrations,
 } from "../controllers/GuestController.js"
+import {
+  registerNewBeingInRoom,
+  returnLeisureRegistrations,
+  updateRegistrationStatus,
+  returnLeisureRoomData,
+  returnUserLeisureRegistration,
+  updateUserLeisureRegistration
+} from "../controllers/LeisureRoomController.js"
+
 
 //init express router
 const router = express.Router();
@@ -72,6 +81,18 @@ router.get("/activeGuests", returnActiveRegistrations);
 router.put("/updateGuest/:id", updateGuestRegistrationStatus);
 
 router.get("/confirmedGuests", returnConfirmedRegistrations);
+
+router.post("/registerLeisure/:id", registerNewBeingInRoom);
+
+router.get("/activeLeisure", returnLeisureRegistrations);
+
+router.put("/updateLeisure/:id", updateRegistrationStatus);
+
+router.get("/confirmedLeisure", returnLeisureRoomData);
+
+router.get("/userLeisure/:id", returnUserLeisureRegistration);
+
+router.put("/updateUserLeisure/:id", updateUserLeisureRegistration);
 
 // //get single product
 // router.get("/products/:id", showProductById);
