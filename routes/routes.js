@@ -13,13 +13,10 @@ import {
   blockUser,
   updateUserInfo,
   AuthentificateUser,
-  // showProductById,
-  // createProduct,
-  // updateProduct,
-  // deleteProduct,
-  // deleteProductbysum1,
-  // testas11,
-  // testas22,
+  updateOccupation,
+  returnUserOccupation,
+  returnAdminOccupation,
+  returnDoorkeepernOccupation,
 } from "../controllers/UserController.js";
 
 import {
@@ -40,7 +37,7 @@ import {
   updateRegistrationStatus,
   returnLeisureRoomData,
   returnUserLeisureRegistration,
-  updateUserLeisureRegistration
+  updateUserLeisureRegistration,
 } from "../controllers/LeisureRoomController.js"
 
 
@@ -94,23 +91,17 @@ router.get("/userLeisure/:id", returnUserLeisureRegistration);
 
 router.put("/updateUserLeisure/:id", updateUserLeisureRegistration);
 
-// //get single product
-// router.get("/products/:id", showProductById);
+router.put("/occupation/:id", updateOccupation);
 
-// // Create New Product
-// router.post("/products", createProduct);
+router.get("/userOccupation/:id", returnUserOccupation);
 
-// // Update Product
-// router.put("/products/:id", updateProduct);
+router.get("/adminOccupation", returnAdminOccupation);
 
-// // Delete Product
-// router.delete("/products/:id", deleteProduct);
+router.get("/doorkeeperOccupation", returnDoorkeepernOccupation);
 
-// router.delete("/products/del/:suma", deleteProductbysum1);
 
-// router.get("/products/testas/:id/:id2", testas11);
 
-// router.post("/products/testas2", testas22);
 
-//export default router
+
+
 export default router;

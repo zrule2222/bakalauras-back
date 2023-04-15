@@ -9,12 +9,10 @@ import {
     getUserRoom,
     blockUserById,
     updateUserInfoById,
-    // getProductById,
-    // insertProduct,
-    // updateProductById,
-    // deleteProductBySuma,
-    // testas,
-    // testas2,
+    updateOccupationById,
+    getUserOccupation,
+    getAdminOccupation,
+    getDoorkeepernOccupation
   } from "../models/UserModel.js";
 
   import { createRequire } from 'module';
@@ -43,28 +41,6 @@ var jwt = require('jsonwebtoken');
     });
   };
 
-  // export const returnLoginUser = (req, res) => {
-  //   const loginData = req.body;
-  //   getLoginUser(loginData, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       if(results.length > 0){
-  //       let rez = {
-  //         "username": results[0].username,
-  //         "role":results[0].role,
-  //          "id": results[0].user_id
-  //       }
-  //       res.json(rez);
-  //     }
-  //     else{
-  //       res.status(500)
-  //       res.json("Naudotojas su įvestais prisijiungimo duomenimis neegzistuoja");
-  //     }
-  //     }
-  //   });
-  // };
-
   export const returnLoginUser = (req, res) => {
     const loginData = req.body;
     getLoginUser(loginData, (err, results) => {
@@ -79,7 +55,7 @@ var jwt = require('jsonwebtoken');
         }
 
         let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '1h' })
-        res.json(jwtToken);
+        res.json({token: jwtToken, blocked:  results[0].blocked });
       }
       else{
         res.status(500)
@@ -112,7 +88,13 @@ var jwt = require('jsonwebtoken');
       if (err) {
         res.send(err);
       } else {
-        res.json(results[0]);
+        if(results.length > 0){
+          res.json(results[0])
+          }
+          else{
+            res.status(500)
+            res.json("Gyventojas neegzistuoja")
+          }
       }
     });
   };
@@ -204,85 +186,71 @@ var jwt = require('jsonwebtoken');
       }
     });
   };
-  
-  // //get single product
-  // export const showProductById = (req, res) => {
-  //   getProductById(req.params.id, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(results);
-  //     }
-  //   });
-  // };
-  
-  // //create new product
-  // export const createProduct = (req, res) => {
-  //   const data = req.body;
-  //   insertProduct(data, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(results);
-  //     }
-  //   });
-  // };
-  
-  // // Update Product
-  // export const updateProduct = (req, res) => {
-  //   const data = req.body;
-  //   const id = req.params.id;
-  //   updateProductById(data, id, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(results);
-  //     }
-  //   });
-  // };
-  
-  // // Delete Product
-  // export const deleteProduct = (req, res) => {
-  //   const id = req.params.id;
-  //   deleteProductById(id, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(results);
-  //     }
-  //   });
-  // };
 
-  // export const deleteProductbysum1 = (req, res) => {
-  //   const suma = req.params.suma;
-  //   deleteProductBySuma(suma, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(results);
-  //     }
-  //   });
-  // };
+  export const updateOccupation = (req, res) => {
+    const id = req.params.id
+    const updateData = req.body;
+    updateOccupationById(updateData,id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.affectedRows > 0){
+          res.json("užimtumas atnaujintas sėkmingai")
+          }
+          else{
+            res.status(500)
+            res.json("Nepavyko atnaujinti užimtumo")
+          }
+      }
+    });
+  };
 
-  // export const testas11 = (req, res) => {
-  //   const id1 = req.params.id;
-  //   const id2 = req.params.id2;
-  //   testas(id1, id2, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(results);
-  //     }
-  //   });
-  // };
+  export const returnUserOccupation = (req, res) => {
+    const id = req.params.id
+    getUserOccupation(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          res.json(results[0])
+          }
+          else{
+            res.status(500)
+            res.json("Naudotojas neturi užimtumo")
+          }
+      }
+    });
+  };
 
-  // export const testas22 = (req, res) => {
-  //   const data = req.body;
-  //   testas2(data, (err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(results);
-  //     }
-  //   });
-  // };
+  export const returnAdminOccupation = (req, res) => {
+    getAdminOccupation((err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          res.json(results[0])
+          }
+          else{
+            res.status(500)
+            res.json("Administratorius nepriima gyventojų")
+          }
+      }
+    });
+  };
+
+  export const returnDoorkeepernOccupation = (req, res) => {
+    getDoorkeepernOccupation((err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          res.json(results[0])
+          }
+          else{
+            res.status(500)
+            res.json("Budėtojas nepriima gyventojų")
+          }
+      }
+    });
+  };
+

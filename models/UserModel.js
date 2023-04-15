@@ -94,95 +94,44 @@ export const updateUserInfoById = (updateData,id,result) => {
   });
 };
 
-// //get single product
-// export const getProductById = (id, result) => {
-//   db.query(
-//     "SELECT * FROM PRODUCT WHERE product_id = ?",
-//     [id],
-//     (err, results) => {
-//       if (err) {
-//         console.log(err);
-//         result(err, null);
-//       } else {
-//         result(null, results[0]);
-//       }
-//     }
-//   );
-// };
+export const updateOccupationById = (updateData,id,result) => {
+  db.query("UPDATE user set occupation = ? where user_id = ?",[updateData.occupation,id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
 
-// //insert product to databased
-// export const insertProduct = (data, result) => {
-//   db.query("INSERT INTO product SET ?", [data], (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       result(err, null);
-//     } else {
-//       result(null, results);
-//     }
-//   });
-// };
+export const getUserOccupation = (id,result) => {
+  db.query("SELECT occupation from user where user_id = ?",[id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
 
-// // Update Product to Database
-// export const updateProductById = (data, id, result) => {
-//   db.query(
-//     "UPDATE product SET product_name = ?, product_price = ? WHERE product_id = ?",
-//     [data.product_name, data.product_price, id],
-//     (err, results) => {
-//       if (err) {
-//         console.log(err);
-//         result(err, null);
-//       } else {
-//         result(null, results);
-//       }
-//     }
-//   );
-// };
+export const getAdminOccupation = (result) => {
+  db.query("SELECT occupation from user where role = 'Administratorius' and occupation = 'Laisvas' or occupation = 'Užimtas'", (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
 
-// // Delete Product to Database
-// export const deleteProductById = (id, result) => {
-//   db.query("DELETE FROM product WHERE product_id = ?", [id], (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       result(err, null);
-//     } else {
-//       result(null, results);
-//     }
-//   });
-// };
+export const getDoorkeepernOccupation = (result) => {
+  db.query("SELECT occupation from user where role = 'Budėtojas' and occupation = 'Laisvas' or occupation = 'Užimtas'", (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
 
-// //nuo cia mano testai
-// export const deleteProductBySuma = (suma, result) => {
-//   db.query("DELETE FROM product WHERE product_price > ?", [suma], (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       result(err, null);
-//     } else {
-//       console.log('viskas chill')
-//       result(null, results);
-//     }
-//   });
-// };
 
-// export const testas = (id1, id2, result) => {
-//   db.query("SELECT * FROM product inner JOIN testas on ? = ?;", [id1,id2], (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       result(err, null);
-//     } else {
-//       console.log(results.data)
-//       result(null, results);
-//     }
-//   });
-// };
-
-// export const testas2 = (data, result) => {
-//   db.query("insert into product set product_name = ?, product_price = ?;", [data.id,data.id2], (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       result(err, null);
-//     } else {
-//       console.log(results.data)
-//       result(null, results);
-//     }
-//   });
-// };
