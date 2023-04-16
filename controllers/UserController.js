@@ -12,7 +12,9 @@ import {
     updateOccupationById,
     getUserOccupation,
     getAdminOccupation,
-    getDoorkeepernOccupation
+    getDoorkeepernOccupation,
+    checkIfUserExistsByName,
+    getAllResidentsInformation
   } from "../models/UserModel.js";
 
   import { createRequire } from 'module';
@@ -253,4 +255,40 @@ var jwt = require('jsonwebtoken');
       }
     });
   };
+
+  export const checkIfUserExists = (req, res) => {
+    const data = req.body;
+    let username = data.username
+    checkIfUserExistsByName(username,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          res.status(500)
+          res.json("Naudotojas su tokiu prisijiungimo vardu jau egzistuoja")
+          }
+          else{
+            res.json("Naudotojo su tokiu prisijiungimo vardu nėra")
+          }
+      }
+    });
+  };
+
+  export const getResidentsInformation = (req, res) => {
+    getAllResidentsInformation((err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          res.json(results)
+          }
+          else{
+            res.status(500)
+            res.json("Bendrabutyje nėra užregistruotų gyventojų")
+          }
+      }
+    });
+  };
+
+
 

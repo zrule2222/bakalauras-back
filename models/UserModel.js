@@ -115,7 +115,7 @@ export const getUserOccupation = (id,result) => {
 };
 
 export const getAdminOccupation = (result) => {
-  db.query("SELECT occupation from user where role = 'Administratorius' and occupation = 'Laisvas' or occupation = 'Užimtas'", (err, results) => {
+  db.query("SELECT occupation from user where role = 'Administratorius' and (occupation = 'Laisvas' or occupation = 'Užimtas')", (err, results) => {
     if (err) {
       result(err, null);
     } else {
@@ -125,7 +125,27 @@ export const getAdminOccupation = (result) => {
 };
 
 export const getDoorkeepernOccupation = (result) => {
-  db.query("SELECT occupation from user where role = 'Budėtojas' and occupation = 'Laisvas' or occupation = 'Užimtas'", (err, results) => {
+  db.query("SELECT occupation from user where role = 'Budėtojas' and (occupation = 'Laisvas' or occupation = 'Užimtas')", (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const checkIfUserExistsByName = (username,result) => {
+  db.query("SELECT user_id from user where username = ?",[username], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const getAllResidentsInformation = (result) => {
+  db.query("SELECT user_id,firstname,lastname,username FROM user where role = 'Gyventojas'", (err, results) => {
     if (err) {
       result(err, null);
     } else {

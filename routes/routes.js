@@ -17,6 +17,8 @@ import {
   returnUserOccupation,
   returnAdminOccupation,
   returnDoorkeepernOccupation,
+  checkIfUserExists,
+  getResidentsInformation,
 } from "../controllers/UserController.js";
 
 import {
@@ -39,6 +41,12 @@ import {
   returnUserLeisureRegistration,
   updateUserLeisureRegistration,
 } from "../controllers/LeisureRoomController.js"
+
+import {
+  returnRoomsForRegistration,
+  UpdateRoomSpace,
+  UpdateRoomStatus,
+} from "../controllers/RoomsController.js"
 
 
 //init express router
@@ -98,6 +106,18 @@ router.get("/userOccupation/:id", returnUserOccupation);
 router.get("/adminOccupation", returnAdminOccupation);
 
 router.get("/doorkeeperOccupation", returnDoorkeepernOccupation);
+
+router.post("/roomsForRegistration", returnRoomsForRegistration);
+
+router.put("/updateRoomSpace/:id", UpdateRoomSpace);
+
+router.put("/updateRoomstatus", UpdateRoomStatus);
+
+router.post("/checkUsername", checkIfUserExists);
+
+router.get("/residents", getResidentsInformation);
+
+
 
 
 
