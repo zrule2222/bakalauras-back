@@ -56,7 +56,7 @@ var jwt = require('jsonwebtoken');
            "id": results[0].user_id
         }
 
-        let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '1h' })
+        let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '10s' })
         res.json({token: jwtToken, blocked:  results[0].blocked });
       }
       else{
