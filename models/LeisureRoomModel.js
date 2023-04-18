@@ -45,7 +45,7 @@ export const registerBeingInRoom = (registrationData, result) => {
   };
 
   export const getUserLeisureRegistration = (id,result) => {
-    db.query("select* from leisure_room_registrations where fk_user= ? and leisure_status = 'Laukiama patvirtinimo'"
+    db.query("select* from leisure_room_registrations where fk_user= ? and leisure_status = 'Laukiama patvirtinimo' or leisure_status = 'Patvirtinta' "
     ,[id], (err, results) => {
       if (err) {
         result(err, null);
