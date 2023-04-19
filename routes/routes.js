@@ -1,6 +1,19 @@
 //import express
 import express from "express";
 
+import rateLimit from 'express-rate-limit';
+
+const limiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 5, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: "Per daug bandymų prisijiungti. Pabandykite už kelių minučių",
+});
+
+// Apply the rate limiting middleware to all requests
+
+
 //import functions from controller
 import {
   returnAllUsers,
@@ -57,7 +70,7 @@ router.get("/users", returnAllUsers);
 
 router.post("/register", registerNewUser);
 
-router.post("/login", returnLoginUser);
+router.post("/login",limiter, returnLoginUser);
 
 router.post("/userByName", returnUserByName);
 
