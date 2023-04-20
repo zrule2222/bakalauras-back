@@ -6,13 +6,13 @@ import {
     getUserByName,
     getUserInfo,
     getAllContactInformation,
-    getUserRoom,
+    //getUserRoom,
     blockUserById,
     updateUserInfoById,
     updateOccupationById,
     getUserOccupation,
     getAdminOccupation,
-    getDoorkeepernOccupation,
+    getDoorkeeperOccupation,
     checkIfUserExistsByName,
     getAllResidentsInformation
   } from "../models/UserModel.js";
@@ -135,23 +135,23 @@ var jwt = require('jsonwebtoken');
     });
   };
 
-  export const returnUserRoom = (req, res) => {
-    const id = req.params.id
-    const fk_room = req.body;
-    getUserRoom(id,fk_room.room,(err, results) => {
-      if (err) {
-        res.send(err);
-      } else {
-        if(results.length > 0){
-          res.json(results[0])
-          }
-          else{
-            res.status(500)
-            res.json("Naudotojo kambarys nerastas")
-          }
-      }
-    });
-  };
+  // export const returnUserRoom = (req, res) => {
+  //   const id = req.params.id
+  //   const fk_room = req.body;
+  //   getUserRoom(id,fk_room.room,(err, results) => {
+  //     if (err) {
+  //       res.send(err);
+  //     } else {
+  //       if(results.length > 0){
+  //         res.json(results[0])
+  //         }
+  //         else{
+  //           res.status(500)
+  //           res.json("Naudotojo kambarys nerastas")
+  //         }
+  //     }
+  //   });
+  // };
 
   export const blockUser = (req, res) => {
     const id = req.params.id
@@ -160,7 +160,7 @@ var jwt = require('jsonwebtoken');
         res.send(err);
       } else {
         if(results.affectedRows > 0){
-          res.json("naudotojas užblokuotas sėkmingai")
+          res.json("Naudotojas užblokuotas sėkmingai")
           }
           else{
             res.status(500)
@@ -179,7 +179,7 @@ var jwt = require('jsonwebtoken');
       } else {
         
         if(results.affectedRows > 0){
-           res.json("naudotojo duomenys atnaujinti sėkmingi")
+           res.json("Naudotojo duomenys atnaujinti sėkmingai")
           }
           else{
             res.status(500)
@@ -197,7 +197,7 @@ var jwt = require('jsonwebtoken');
         res.send(err);
       } else {
         if(results.affectedRows > 0){
-          res.json("užimtumas atnaujintas sėkmingai")
+          res.json("Užimtumas atnaujintas sėkmingai")
           }
           else{
             res.status(500)
@@ -240,8 +240,8 @@ var jwt = require('jsonwebtoken');
     });
   };
 
-  export const returnDoorkeepernOccupation = (req, res) => {
-    getDoorkeepernOccupation((err, results) => {
+  export const returnDoorkeeperOccupation = (req, res) => {
+    getDoorkeeperOccupation((err, results) => {
       if (err) {
         res.send(err);
       } else {
@@ -265,10 +265,10 @@ var jwt = require('jsonwebtoken');
       } else {
         if(results.length > 0){
           res.status(500)
-          res.json("Naudotojas su tokiu prisijiungimo vardu jau egzistuoja")
+          res.json("Naudotojas su tokiu prisijungimo vardu jau egzistuoja")
           }
           else{
-            res.json("Naudotojo su tokiu prisijiungimo vardu nėra")
+            res.json("Naudotojo su tokiu prisijungimo vardu nėra")
           }
       }
     });

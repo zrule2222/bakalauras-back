@@ -83,7 +83,7 @@ export const registerNewUserGuest = (req, res) => {
         res.send(err);
       } else {
         if(results.affectedRows > 0){
-            res.json("Regisracijos statusas atnaujintas sėkmingai")
+            res.json("Registracijos statusas atnaujintas sėkmingai")
            }
            else{
              res.status(500)

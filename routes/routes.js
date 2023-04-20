@@ -4,11 +4,11 @@ import express from "express";
 import rateLimit from 'express-rate-limit';
 
 const limiter = rateLimit({
-  windowMs: 5 * 60 * 1000, // 5 minutes
+  windowMs: 1 * 60 * 1000, // 5 minutes
   max: 5, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-  message: "Per daug bandymų prisijiungti. Pabandykite už kelių minučių",
+  message: "Per daug bandymų prisijungti. Pabandykite už kelių minučių",
 });
 
 // Apply the rate limiting middleware to all requests
@@ -22,16 +22,16 @@ import {
   returnUserByName,
   returnUserInfo,
   returnAllContactInformation,
-  returnUserRoom,
   blockUser,
   updateUserInfo,
   AuthentificateUser,
   updateOccupation,
   returnUserOccupation,
   returnAdminOccupation,
-  returnDoorkeepernOccupation,
+  returnDoorkeeperOccupation,
   checkIfUserExists,
   getResidentsInformation,
+ // returnUserRoom
 } from "../controllers/UserController.js";
 
 import {
@@ -59,6 +59,7 @@ import {
   returnRoomsForRegistration,
   UpdateRoomSpace,
   UpdateRoomStatus,
+  returnUserRoom,
 } from "../controllers/RoomsController.js"
 
 
@@ -118,7 +119,7 @@ router.get("/userOccupation/:id", returnUserOccupation);
 
 router.get("/adminOccupation", returnAdminOccupation);
 
-router.get("/doorkeeperOccupation", returnDoorkeepernOccupation);
+router.get("/doorkeeperOccupation", returnDoorkeeperOccupation);
 
 router.post("/roomsForRegistration", returnRoomsForRegistration);
 

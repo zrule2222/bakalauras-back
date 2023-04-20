@@ -29,3 +29,13 @@ export const getRoomsForRegistration = (room_gender,result) => {
       }
     });
   };
+
+  export const getUserRoom = (id,fk_room,result) => {
+    db.query("SELECT number from user,rooms where ? = rooms.room_id AND user.user_id = ?",[fk_room,id], (err, results) => {
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    });
+  };

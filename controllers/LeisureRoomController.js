@@ -14,7 +14,7 @@ export const registerNewBeingInRoom = (req, res) => {
         res.send("Registration nepavyko");
       } else {
         
-        res.json("laisvalaikio kambario registracija sėkminga");
+        res.json("Laisvalaikio kambario registracija sėkminga");
       }
     });
   };
@@ -29,7 +29,7 @@ export const registerNewBeingInRoom = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("Nėra laisvalaikio kambario registracijų laukančiū patvirtinimo")
+              res.json("Nėra laisvalaikio kambario registracijų laukiančių patvirtinimo")
             }
       }
     });
@@ -47,7 +47,7 @@ export const registerNewBeingInRoom = (req, res) => {
         res.send(err);
       } else {
         if(results.affectedRows > 0){
-            res.json("Regisracijos statusas atnaujintas sėkmingai")
+            res.json("Registracijos statusas atnaujintas sėkmingai")
            }
            else{
              res.status(500)
@@ -84,7 +84,7 @@ export const registerNewBeingInRoom = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("naudotojas neturi laukiančios patvirtinimo laisvalaikio kambario registracijos")
+              res.json("Naudotojas neturi laukiančios patvirtinimo laisvalaikio kambario registracijos")
             }
       }
     });
