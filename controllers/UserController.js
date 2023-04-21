@@ -14,12 +14,25 @@ import {
     getAdminOccupation,
     getDoorkeeperOccupation,
     checkIfUserExistsByName,
-    getAllResidentsInformation
+    getAllResidentsInformation,
+    updateUserPasswordById,
   } from "../models/UserModel.js";
 
   import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 var jwt = require('jsonwebtoken');
+
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'bakalaurasdorm@gmail.com',
+    pass: 'bmeczxnjfxcuaeve'
+  }
+});
+
+
   
   //get all products
   export const returnAllUsers = (req, res) => {
@@ -32,6 +45,32 @@ var jwt = require('jsonwebtoken');
     });
   };
 
+  export const sendMailToUser = (req, res) => {
+    const MailData = req.body;
+    var mailOptions = {
+      from: 'bakalaurasdorm@gmail.com',
+      to: MailData.userMail,
+      subject: 'Naujai sukurta bendrabučio paskyrą',
+      text: `Jūsų bendrabučio paskyros slaptažodis yra: ${MailData.password}\nPrašome pasikeisti šį slaptažodį prisijiungus prie bendrabučio sistemos`
+    };
+    
+    // transporter.sendMail(mailOptions, function(error, info){
+    //   if (error) {
+    //     console.log(error);
+    //   } else {
+        
+    //     console.log('Email sent: ' + info.response);
+    //   }
+    // });
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        res.send("Laiško išsiūsti nepavyko");
+      } else {
+        res.json("Laiškas naudotojui nusiūstas sėkmingai");
+      }
+    });
+  };
+
     export const registerNewUser = (req, res) => {
     const registrationData = req.body;
     registerUser(registrationData, (err, results) => {
@@ -39,6 +78,24 @@ var jwt = require('jsonwebtoken');
         res.send("Registration failed");
       } else {
         res.json("Registration was sucessfull");
+      }
+    });
+  };
+
+  export const updateUserPassword = (req, res) => {
+    const id = req.params.id
+    const updateData = req.body;
+    updateUserPasswordById(updateData,id, (err, results) => {
+      if (err) {
+        res.status(501)
+        res.send("Slaptažodžio keitimas nepavyko");
+      } else {
+        if(results.changedRows  == 0){
+          res.status(500)
+          res.send("Bandoma keisti į tapatį slaptažodį");
+        }
+        else if(results.changedRows  == 1)
+        res.json("Slaptažodis pakeistas sėkmingai");
       }
     });
   };
@@ -179,7 +236,8 @@ var jwt = require('jsonwebtoken');
       } else {
         
         if(results.affectedRows > 0){
-           res.json("Naudotojo duomenys atnaujinti sėkmingai")
+           //res.json("Naudotojo duomenys atnaujinti sėkmingai")
+           res.json(results)
           }
           else{
             res.status(500)

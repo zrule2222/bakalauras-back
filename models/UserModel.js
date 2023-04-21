@@ -1,6 +1,7 @@
 //import connection
 import db from "../config/database.js";
 
+
 //get all products
 export const getAllUsers = (result) => {
   db.query("SELECT * FROM user", (err, results) => {
@@ -104,6 +105,18 @@ export const updateOccupationById = (updateData,id,result) => {
   });
 };
 
+export const updateUserPasswordById = (updateData,id,result) => {
+  db.query("UPDATE user set passsword = IF(PASSWORD(?) = passsword,passsword,PASSWORD(?)) where user_id = ?",[updateData.password,updateData.password,id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+
+
 export const getUserOccupation = (id,result) => {
   db.query("SELECT occupation from user where user_id = ?",[id], (err, results) => {
     if (err) {
@@ -153,5 +166,6 @@ export const getAllResidentsInformation = (result) => {
     }
   });
 };
+
 
 

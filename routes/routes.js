@@ -31,6 +31,8 @@ import {
   returnDoorkeeperOccupation,
   checkIfUserExists,
   getResidentsInformation,
+  sendMailToUser,
+  updateUserPassword,
  // returnUserRoom
 } from "../controllers/UserController.js";
 
@@ -130,6 +132,10 @@ router.put("/updateRoomstatus", UpdateRoomStatus);
 router.post("/checkUsername", checkIfUserExists);
 
 router.get("/residents", getResidentsInformation);
+
+router.post("/sendMail", sendMailToUser);
+
+router.put("/userPass/:id", updateUserPassword);
 
 
 
