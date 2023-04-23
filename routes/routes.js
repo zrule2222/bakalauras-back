@@ -64,6 +64,12 @@ import {
   returnUserRoom,
 } from "../controllers/RoomsController.js"
 
+import {
+  getMachineData,
+  registerNewWashing,
+  updateMachineStatus,
+} from "../controllers/WashingMachineController.js"
+
 
 //init express router
 const router = express.Router();
@@ -136,6 +142,18 @@ router.get("/residents", getResidentsInformation);
 router.post("/sendMail", sendMailToUser);
 
 router.put("/userPass/:id", updateUserPassword);
+
+router.get("/machineData", getMachineData);
+
+router.post("/registerWashing", registerNewWashing);
+
+router.put("/updatemachine/:id", updateMachineStatus);
+
+
+
+
+
+
 
 
 

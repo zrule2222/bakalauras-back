@@ -240,7 +240,7 @@ var transporter = nodemailer.createTransport({
            res.json(results)
           }
           else{
-            res.status(500)
+            res.status(501)
             res.json("Nepavyko atnaujinti naudotojo duomenų")
           }
       }

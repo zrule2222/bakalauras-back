@@ -86,7 +86,7 @@ export const blockUserById = (id,result) => {
 };
 
 export const updateUserInfoById = (updateData,id,result) => {
-  db.query("UPDATE user set email = ?, passsword = COALESCE(IF(PASSWORD(?) = '', NULL, PASSWORD(?)),passsword), blocked = ? where user_id = ?",[updateData.email,updateData.password,updateData.password,updateData.blocked,id], (err, results) => {
+  db.query("UPDATE user set email = ?, blocked = ? where user_id = ?",[updateData.email,updateData.blocked,id], (err, results) => {
     if (err) {
       result(err, null);
     } else {
