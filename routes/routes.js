@@ -68,6 +68,8 @@ import {
   getMachineData,
   registerNewWashing,
   updateMachineStatus,
+  updateMachineWhenFinished,
+  endWashingRegistration,
 } from "../controllers/WashingMachineController.js"
 
 
@@ -148,6 +150,12 @@ router.get("/machineData", getMachineData);
 router.post("/registerWashing", registerNewWashing);
 
 router.put("/updatemachine/:id", updateMachineStatus);
+
+router.put("/finishMachine/:id", updateMachineWhenFinished);
+
+router.put("/finishWashing/:id", endWashingRegistration);
+
+
 
 
 

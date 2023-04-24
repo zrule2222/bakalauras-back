@@ -2,6 +2,8 @@ import{
     getAllMachineData,
     registerWashing,
     updateMachineStatusById,
+    updateMachineWhenWashingFinished,
+    endWashingRegistrationById,
 } from "../models/WashingMachineModel.js";
 
 export const getMachineData = (req, res) => {
@@ -27,7 +29,7 @@ export const getMachineData = (req, res) => {
         res.send(err);
       } else {
         
-        res.json("Laisvalaikio kambario registracija sėkminga");
+        res.json(results);
       }
     });
   };
@@ -49,3 +51,39 @@ export const getMachineData = (req, res) => {
       }
     });
   };
+
+  export const updateMachineWhenFinished = (req, res) => {
+    const id = req.params.id;
+    updateMachineWhenWashingFinished(id, (err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.affectedRows > 0){
+            res.json("Skalbimo mašinos statusas atnaujintas sėkmingai")
+           }
+           else{
+             res.status(500)
+             res.json("Nepavyko atnaujinti Skalbimo mašinos statuso")
+           }
+      }
+    });
+  };
+
+  export const endWashingRegistration = (req, res) => {
+    const id = req.params.id;
+    endWashingRegistrationById(id, (err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.affectedRows > 0){
+            res.json("Skalbimo Registracija užbaikta sėkmingai")
+           }
+           else{
+             res.status(500)
+             res.json("Nepavyko užbaikti skalbimo registracijos")
+           }
+      }
+    });
+  };
+
+
