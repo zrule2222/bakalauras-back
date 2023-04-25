@@ -70,6 +70,11 @@ import {
   updateMachineStatus,
   updateMachineWhenFinished,
   endWashingRegistration,
+  registerNewWashingFailure,
+  updateMachineFailFirstReg,
+  updateMachineFailSecondtReg,
+  updateMachineFailThirdtReg,
+  getUsersByFailReg,
 } from "../controllers/WashingMachineController.js"
 
 
@@ -154,6 +159,22 @@ router.put("/updatemachine/:id", updateMachineStatus);
 router.put("/finishMachine/:id", updateMachineWhenFinished);
 
 router.put("/finishWashing/:id", endWashingRegistration);
+
+router.post("/registerFailure", registerNewWashingFailure);
+
+router.put("/machineFailFirstReg/:id", updateMachineFailFirstReg);
+
+router.put("/machineFailSecondtReg/:id", updateMachineFailSecondtReg);
+
+router.put("/machineFailThirdtReg/:id", updateMachineFailThirdtReg);
+
+router.get("/getFailRegUsers/:id", getUsersByFailReg);
+
+
+
+
+
+
 
 
 

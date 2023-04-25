@@ -4,6 +4,11 @@ import{
     updateMachineStatusById,
     updateMachineWhenWashingFinished,
     endWashingRegistrationById,
+    registerWashingFailure,
+    updateMachineFailFirst,
+    updateMachineFailSecond,
+    updateMachineFailThird,
+    getUsersByCurrentFailReg,
 } from "../models/WashingMachineModel.js";
 
 export const getMachineData = (req, res) => {
@@ -85,5 +90,91 @@ export const getMachineData = (req, res) => {
       }
     });
   };
+
+  export const registerNewWashingFailure = (req, res) => {
+    const registrationData = req.body;
+    registerWashingFailure(registrationData, (err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        
+        res.json(results);
+      }
+    });
+  };
+
+  export const updateMachineFailFirstReg = (req, res) => {
+    const id = req.params.id;
+    const registrationId = req.body.regId;
+    updateMachineFailFirst(registrationId,id, (err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.changedRows > 0){
+            res.json(results)
+           }
+           else{
+             res.status(500)
+             res.json("Skalbimo mašinos gedimo užregistruoti nepavyko")
+           }
+      }
+    });
+  };
+
+  export const updateMachineFailSecondtReg = (req, res) => {
+    const id = req.params.id;
+    const registrationId = req.body.regId;
+    updateMachineFailSecond(registrationId,id, (err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.changedRows > 0){
+            res.json(results)
+           }
+           else{
+             res.status(500)
+             res.json("Skalbimo mašinos gedimo užregistruoti nepavyko")
+           }
+      }
+    });
+  };
+
+  export const updateMachineFailThirdtReg = (req, res) => {
+    const id = req.params.id;
+    const registrationId = req.body.regId;
+    updateMachineFailThird(registrationId,id, (err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.changedRows > 0){
+            res.json(results)
+           }
+           else{
+             res.status(500)
+             res.json("Skalbimo mašinos gedimo užregistruoti nepavyko")
+           }
+      }
+    });
+  };
+
+  export const getUsersByFailReg = (req, res) => {
+    const id = req.params.id;
+    getUsersByCurrentFailReg(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti naudotojų šiuo metu pateikusių gedimą")
+            }
+      }
+    });
+  };
+
+ 
+
 
 
