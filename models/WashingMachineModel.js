@@ -101,6 +101,36 @@ export const getAllMachineData = (result) => {
     });
   };
 
+  export const fixWashingMachineById = (id,result) => {
+    db.query("update washing_machine set machine_status = 'Working', failure_count = 0, failure_registration_1 = null, failure_registration_2 = null, failure_registration_3 = null where machine_id = ?",[id], (err, results) => {
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    });
+  };
+
+  export const getMachineFailRegForResident = (id,result) => {
+    db.query("SELECT created_at,machine_number FROM washing_machine_failure_registrations join washing_machine on machine_id = fk_machine where washing_machine_failure_registrations.fk_user = ? order by created_at desc",[id], (err, results) => {
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    });
+  };
+
+  export const getMachineFailRegForAdmin = (result) => {
+    db.query("SELECT firstname,lastname,created_at,machine_number FROM washing_machine_failure_registrations join user on user_id = fk_user join washing_machine on machine_id = fk_machine order by created_at desc", (err, results) => {
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    });
+  };
+
 
 
 

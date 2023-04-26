@@ -51,7 +51,7 @@ var transporter = nodemailer.createTransport({
       from: 'bakalaurasdorm@gmail.com',
       to: MailData.userMail,
       subject: 'Naujai sukurta bendrabučio paskyrą',
-      text: `Jūsų bendrabučio paskyros slaptažodis yra: ${MailData.password}\nPrašome pasikeisti šį slaptažodį prisijiungus prie bendrabučio sistemos`
+      text: `Jums buvo sukurta nauja paskyra bendrabučio sistemoje\nPaskyros prisijungimo vardas: ${MailData.username}\nSlaptažodis: ${MailData.password}\nPrašome pasikeisti slaptažodį prisijiungus prie bendrabučio sistemos`
     };
     
     // transporter.sendMail(mailOptions, function(error, info){

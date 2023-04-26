@@ -9,6 +9,9 @@ import{
     updateMachineFailSecond,
     updateMachineFailThird,
     getUsersByCurrentFailReg,
+    fixWashingMachineById,
+    getMachineFailRegForResident,
+    getMachineFailRegForAdmin,
 } from "../models/WashingMachineModel.js";
 
 export const getMachineData = (req, res) => {
@@ -173,6 +176,59 @@ export const getMachineData = (req, res) => {
       }
     });
   };
+
+  export const fixWashingMachine = (req, res) => {
+    const id = req.params.id;
+    fixWashingMachineById(id, (err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.changedRows > 0){
+            res.json("Skalbimo mašina sutvarkyta sėkmingai")
+           }
+           else{
+             res.status(500)
+             res.json("Skalbimo mašinos sutvarkyti nepavyko")
+           }
+      }
+    });
+  };
+
+  export const getMachineFailRegResident = (req, res) => {
+    const id = req.params.id;
+    getMachineFailRegForResident(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojo skalbimo mašinų registracijų")
+            }
+      }
+    });
+  };
+
+  export const getMachineFailRegAdmin = (req, res) => {
+    getMachineFailRegForAdmin((err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojo skalbimo mašinų registracijų")
+            }
+      }
+    });
+  };
+
+
+
 
  
 

@@ -75,6 +75,9 @@ import {
   updateMachineFailSecondtReg,
   updateMachineFailThirdtReg,
   getUsersByFailReg,
+  fixWashingMachine,
+  getMachineFailRegResident,
+  getMachineFailRegAdmin,
 } from "../controllers/WashingMachineController.js"
 
 
@@ -169,6 +172,15 @@ router.put("/machineFailSecondtReg/:id", updateMachineFailSecondtReg);
 router.put("/machineFailThirdtReg/:id", updateMachineFailThirdtReg);
 
 router.get("/getFailRegUsers/:id", getUsersByFailReg);
+
+router.put("/fixMachine/:id", fixWashingMachine);
+
+router.get("/machineFailResident/:id", getMachineFailRegResident);
+
+router.get("/machineFailAdmin", getMachineFailRegAdmin);
+
+
+
 
 
 
