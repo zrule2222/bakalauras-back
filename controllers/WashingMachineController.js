@@ -12,6 +12,7 @@ import{
     fixWashingMachineById,
     getMachineFailRegForResident,
     getMachineFailRegForAdmin,
+    getWashingtRegForAdmin,
 } from "../models/WashingMachineModel.js";
 
 export const getMachineData = (req, res) => {
@@ -226,6 +227,24 @@ export const getMachineData = (req, res) => {
       }
     });
   };
+  
+  export const getWashingtRegAdmin = (req, res) => {
+    getWashingtRegForAdmin((err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojo svečių registracijų")
+            }
+      }
+    });
+  };
+
+  
 
 
 

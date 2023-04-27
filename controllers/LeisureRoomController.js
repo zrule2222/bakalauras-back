@@ -5,6 +5,8 @@ import{
     getLeisureRoomData,
     getUserLeisureRegistration,
     updateUserLeisureRegistrationStatus,
+    getLeisureRegForAdmin,
+    getLeisurRegForResident,
 } from "../models/LeisureRoomModel.js";
 
 export const registerNewBeingInRoom = (req, res) => {
@@ -110,6 +112,41 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
+
+  export const getLeisureRegAdmin = (req, res) => {
+    getLeisureRegForAdmin((err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojų laisvalaikio kambario registracijų")
+            }
+      }
+    });
+  };
+
+  export const getLeisurRegResident = (req, res) => {
+    const id = req.params.id;
+    getLeisurRegForResident(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojų laisvalaikio kambario registracijų")
+            }
+      }
+    });
+  };
+
+
 
 
 

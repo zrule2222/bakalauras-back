@@ -47,6 +47,8 @@ import {
   returnActiveRegistrations,
   updateGuestRegistrationStatus,
   returnConfirmedRegistrations,
+  getGuestRegAdmin,
+  getGuestRegResident,
 } from "../controllers/GuestController.js"
 import {
   registerNewBeingInRoom,
@@ -55,6 +57,8 @@ import {
   returnLeisureRoomData,
   returnUserLeisureRegistration,
   updateUserLeisureRegistration,
+  getLeisureRegAdmin,
+  getLeisurRegResident,
 } from "../controllers/LeisureRoomController.js"
 
 import {
@@ -78,6 +82,7 @@ import {
   fixWashingMachine,
   getMachineFailRegResident,
   getMachineFailRegAdmin,
+  getWashingtRegAdmin,
 } from "../controllers/WashingMachineController.js"
 
 
@@ -178,6 +183,22 @@ router.put("/fixMachine/:id", fixWashingMachine);
 router.get("/machineFailResident/:id", getMachineFailRegResident);
 
 router.get("/machineFailAdmin", getMachineFailRegAdmin);
+
+router.get("/guestRegAdmin", getGuestRegAdmin);
+
+router.get("/guestRegResident/:id", getGuestRegResident);
+
+router.get("/leisureRegAdmin", getLeisureRegAdmin);
+
+router.get("/leisureRegResident/:id", getLeisurRegResident)
+
+router.get("/washingRegAdmin", getWashingtRegAdmin);
+
+
+
+
+
+
 
 
 

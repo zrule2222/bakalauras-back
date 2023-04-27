@@ -6,6 +6,8 @@ import{
     getActiveRegistrations,
     updateGuestRegistrationStatusById,
     getConfirmedRegistrations,
+    getGuestRegForAdmin,
+    getGuestRegForResident,
 } from "../models/GuestModal.js";
 
 export const registerNewUserGuest = (req, res) => {
@@ -108,4 +110,39 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
+
+  export const getGuestRegAdmin = (req, res) => {
+    getGuestRegForAdmin((err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojo svečių registracijų")
+            }
+      }
+    });
+  };
+
+  export const getGuestRegResident = (req, res) => {
+    const id = req.params.id;
+    getGuestRegForResident(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojo svečių registracijų")
+            }
+      }
+    });
+  };
+
+
  

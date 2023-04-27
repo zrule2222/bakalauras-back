@@ -11,7 +11,7 @@ export const getAllMachineData = (result) => {
   };
 
   export const registerWashing = (registrationData,result) => {
-    db.query("insert into washing_machine_registrations set fk_user = ?, machine_reg_status = ?, created_at = ?, fk_machine = ?, washing_time = ?",[registrationData.user,
+    db.query("insert into washing_machine_registrations set fk_user = ?, machine_reg_status = ?, started_at = ?, fk_machine = ?, washing_time = ?",[registrationData.user,
         registrationData.status,new Date(),registrationData.machine,registrationData.time ], (err, results) => {
       if (err) {
         result(err, null);
@@ -42,7 +42,7 @@ export const getAllMachineData = (result) => {
   };
 
   export const endWashingRegistrationById = (id,result) => {
-    db.query("update washing_machine_registrations set machine_reg_status = 'Užbaikta', updated_at = ADDTIME(`created_at`,`washing_time`) where machine_reg_id = ?",[id], (err, results) => {
+    db.query("update washing_machine_registrations set machine_reg_status = 'Užbaikta', ended_at = ADDTIME(`started_at`,`washing_time`) where machine_reg_id = ?",[id], (err, results) => {
       if (err) {
         result(err, null);
       } else {
@@ -123,6 +123,16 @@ export const getAllMachineData = (result) => {
 
   export const getMachineFailRegForAdmin = (result) => {
     db.query("SELECT firstname,lastname,created_at,machine_number FROM washing_machine_failure_registrations join user on user_id = fk_user join washing_machine on machine_id = fk_machine order by created_at desc", (err, results) => {
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    });
+  };
+
+  export const getWashingtRegForAdmin = (result) => {
+    db.query("SELECT firstname,lastname, 'Aktyvus' as statusas,machine_number, started_at,washing_time,null as ended_at FROM washing_machine_registrations join user on user.user_id = washing_machine_registrations.fk_user JOIN washing_machine on washing_machine.machine_id =washing_machine_registrations.fk_machine  WHERE started_at IS NOT null UNION ALL SELECT firstname,lastname, 'Užbaikta' as statusas,machine_number, started_at,washing_time,ended_at FROM washing_machine_registrations join user on user.user_id = washing_machine_registrations.fk_user JOIN washing_machine on washing_machine.machine_id =washing_machine_registrations.fk_machine  WHERE started_at IS NOT null ORDER BY started_at", (err, results) => {
       if (err) {
         result(err, null);
       } else {
