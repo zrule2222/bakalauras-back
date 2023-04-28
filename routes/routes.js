@@ -83,6 +83,7 @@ import {
   getMachineFailRegResident,
   getMachineFailRegAdmin,
   getWashingtRegAdmin,
+  getWashingRegResident,
 } from "../controllers/WashingMachineController.js"
 
 
@@ -193,6 +194,9 @@ router.get("/leisureRegAdmin", getLeisureRegAdmin);
 router.get("/leisureRegResident/:id", getLeisurRegResident)
 
 router.get("/washingRegAdmin", getWashingtRegAdmin);
+
+router.get("/washingRegResident/:id", getWashingRegResident)
+
 
 
 

@@ -23,12 +23,14 @@ const require = createRequire(import.meta.url);
 var jwt = require('jsonwebtoken');
 
 var nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: process.env.EMAIL_SERVICE,
   auth: {
-    user: 'bakalaurasdorm@gmail.com',
-    pass: 'bmeczxnjfxcuaeve'
+    user: process.env.EMAIL_NAME,
+    pass: process.env.EMAIL_PASS
   }
 });
 
@@ -48,7 +50,7 @@ var transporter = nodemailer.createTransport({
   export const sendMailToUser = (req, res) => {
     const MailData = req.body;
     var mailOptions = {
-      from: 'bakalaurasdorm@gmail.com',
+      from: process.env.EMAIL_NAME,
       to: MailData.userMail,
       subject: 'Naujai sukurta bendrabučio paskyrą',
       text: `Jums buvo sukurta nauja paskyra bendrabučio sistemoje\nPaskyros prisijungimo vardas: ${MailData.username}\nSlaptažodis: ${MailData.password}\nPrašome pasikeisti slaptažodį prisijiungus prie bendrabučio sistemos`
@@ -64,6 +66,7 @@ var transporter = nodemailer.createTransport({
     // });
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
+        console.log(error)
         res.send("Laiško išsiūsti nepavyko");
       } else {
         res.json("Laiškas naudotojui nusiūstas sėkmingai");

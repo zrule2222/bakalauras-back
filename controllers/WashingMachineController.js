@@ -13,6 +13,7 @@ import{
     getMachineFailRegForResident,
     getMachineFailRegForAdmin,
     getWashingtRegForAdmin,
+    getWashingRegForResident,
 } from "../models/WashingMachineModel.js";
 
 export const getMachineData = (req, res) => {
@@ -243,6 +244,24 @@ export const getMachineData = (req, res) => {
       }
     });
   };
+
+  export const getWashingRegResident = (req, res) => {
+    const id = req.params.id;
+    getWashingRegForResident(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+            res.json(results)
+            }
+            else{
+              res.status(500)
+              res.json("nepavyko gauti gyventojo skalbimo registracijų")
+            }
+      }
+    });
+  };
+
 
   
 
