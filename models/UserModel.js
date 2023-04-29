@@ -138,7 +138,7 @@ export const getAdminOccupation = (result) => {
 };
 
 export const getDoorkeeperOccupation = (result) => {
-  db.query("SELECT occupation from user where role = 'Budėtojas' and (occupation = 'Laisvas' or occupation = 'Užimtas')", (err, results) => {
+  db.query("SELECT occupation, user_id from user where role = 'Budėtojas' and (occupation = 'Laisvas' or occupation = 'Užimtas')", (err, results) => {
     if (err) {
       result(err, null);
     } else {
