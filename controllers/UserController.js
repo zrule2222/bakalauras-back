@@ -121,7 +121,7 @@ var transporter = nodemailer.createTransport({
       }
       else{
         res.status(500)
-        res.json("Naudotojas su įvestais prisijiungimo duomenimis neegzistuoja");
+        res.json("Naudotojas su įvestais prisijungimo duomenimis neegzistuoja");
       }
       }
     });
