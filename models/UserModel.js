@@ -14,7 +14,7 @@ export const getAllUsers = (result) => {
 };
 
 export const registerUser = (registrationData, result) => {
-  db.query("insert into user set username = ?, passsword = PASSWORD(?), role = ?, blocked = ?, email = ?, firstname = ?, lastname = ?, gender = ?, fk_room = ?, occupation = ? ;"
+  db.query("insert into user set username = ?, passsword = ?, role = ?, blocked = ?, email = ?, firstname = ?, lastname = ?, gender = ?, fk_room = ?, occupation = ? ;"
   , [registrationData.username,registrationData.password,registrationData.role, registrationData.blocked,
      registrationData.email,registrationData.firstname, registrationData.lastname, registrationData.gender, registrationData.room, registrationData.occupation], (err, results) => {
     if (err) {
@@ -26,7 +26,7 @@ export const registerUser = (registrationData, result) => {
 };
 
 export const getLoginUser = (loginData,result) => {
-  db.query("SELECT * FROM user where username = ? and passsword = PASSWORD(?)",[loginData.username,loginData.password], (err, results) => {
+  db.query("SELECT * FROM user where username = ?",[loginData.username], (err, results) => {
     if (err) {
       result(err, null);
     } else {
@@ -106,7 +106,7 @@ export const updateOccupationById = (updateData,id,result) => {
 };
 
 export const updateUserPasswordById = (updateData,id,result) => {
-  db.query("UPDATE user set passsword = IF(PASSWORD(?) = passsword,passsword,PASSWORD(?)) where user_id = ?",[updateData.password,updateData.password,id], (err, results) => {
+  db.query("UPDATE user set passsword = ? where user_id = ?",[updateData.password,id], (err, results) => {
     if (err) {
       result(err, null);
     } else {
@@ -165,7 +165,19 @@ export const getAllResidentsInformation = (result) => {
       result(null, results);
     }
   });
+
 };
+
+export const getUserPasswordById = (id,result) => {
+  db.query("SELECT passsword FROM user where user_id = ?",[id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
 
 
 

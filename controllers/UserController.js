@@ -16,6 +16,7 @@ import {
     checkIfUserExistsByName,
     getAllResidentsInformation,
     updateUserPasswordById,
+    getUserPasswordById,
   } from "../models/UserModel.js";
 
   import { createRequire } from 'module';
@@ -23,8 +24,11 @@ const require = createRequire(import.meta.url);
 var jwt = require('jsonwebtoken');
 
 var nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 dotenv.config();
+//const bcrypt = require('bcrypt');
+//const saltRounds = 10;
 
 var transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
@@ -76,32 +80,84 @@ var transporter = nodemailer.createTransport({
 
     export const registerNewUser = (req, res) => {
     const registrationData = req.body;
-    registerUser(registrationData, (err, results) => {
-      if (err) {
-        res.send("Registration failed");
-      } else {
-        res.json("Registration was sucessfull");
-      }
-    });
+    bcrypt.hash(registrationData.password,  Number(process.env.SALT_ROUNDS), function(err, hash) {
+      registrationData.password = hash
+      registerUser(registrationData, (err, results) => {
+        if (err) {
+          res.send("Registration failed");
+        } else {
+          res.json("Registration was sucessfull");
+        }
+      });
+});
+
   };
+
+//   export const registerNewUser = (req, res) => {
+//     const registrationData = req.body;
+// //     bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+// //     // Store hash in your password DB.
+// // });
+//     registerUser(registrationData, (err, results) => {
+//       if (err) {
+//         res.send("Registration failed");
+//       } else {
+//         res.json("Registration was sucessfull");
+//       }
+//     });
+//   };
 
   export const updateUserPassword = (req, res) => {
     const id = req.params.id
     const updateData = req.body;
-    updateUserPasswordById(updateData,id, (err, results) => {
-      if (err) {
-        res.status(501)
-        res.send("Slaptažodžio keitimas nepavyko");
-      } else {
-        if(results.changedRows  == 0){
+
+   getUserPasswordById(id, (err, results) => {
+    if (err) {
+     
+    } else {
+      console.log(updateData.password)
+      console.log(results[0].passsword)
+      bcrypt.compare(updateData.password, results[0].passsword, function(err, result) {
+        console.log(result)
+        if(result == true){
           res.status(500)
           res.send("Bandoma keisti į tapatį slaptažodį");
+          
         }
-        else if(results.changedRows  == 1)
-        res.json("Slaptažodis pakeistas sėkmingai");
-      }
+        else{
+          bcrypt.hash(updateData.password, Number(process.env.SALT_ROUNDS), function(err, hash) {
+            updateData.password = hash
+            updateUserPasswordById(updateData,id, (err, results) => {
+              if (err) {
+                res.status(501)
+                res.send("Slaptažodžio keitimas nepavyko");
+              } else {
+                res.json("Slaptažodis pakeistas sėkmingai");
+              }
+            });
+          });
+        }
+
+      
     });
+  }
+  });
+
+    // updateUserPasswordById(updateData,id, (err, results) => {
+    //   if (err) {
+    //     res.status(501)
+    //     res.send("Slaptažodžio keitimas nepavyko");
+    //   } else {
+    //     if(results.changedRows  == 0){
+    //       res.status(500)
+    //       res.send("Bandoma keisti į tapatį slaptažodį");
+    //     }
+    //     else if(results.changedRows  == 1)
+    //     res.json("Slaptažodis pakeistas sėkmingai");
+    //   }
+    // });
   };
+
 
   export const returnLoginUser = (req, res) => {
     const loginData = req.body;
@@ -110,14 +166,24 @@ var transporter = nodemailer.createTransport({
         res.send(err);
       } else {
         if(results.length > 0){
-        let rez = {
-          "username": results[0].username,
-          "role":results[0].role,
-           "id": results[0].user_id
-        }
+          bcrypt.compare(loginData.password, results[0].passsword, function(err, result) {
+            if(result == true){
+              let rez = {
+              "username": results[0].username,
+              "role":results[0].role,
+               "id": results[0].user_id
+            }
+    
+            let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '1h' })
+            res.json({token: jwtToken, blocked:  results[0].blocked });
+            }
+            else{
+              res.status(500)
+              res.json("Naudotojas su įvestais prisijungimo duomenimis neegzistuoja");
+            }
 
-        let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '1h' })
-        res.json({token: jwtToken, blocked:  results[0].blocked });
+        });
+       
       }
       else{
         res.status(500)
