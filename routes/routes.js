@@ -90,9 +90,6 @@ import {
 //init express router
 const router = express.Router();
 
-//get all product
-router.get("/users", returnAllUsers);
-
 router.post("/register", registerNewUser);
 
 router.post("/login",limiter, returnLoginUser);

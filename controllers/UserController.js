@@ -1,6 +1,5 @@
 //import functions from Product model
 import {
-  getAllUsers,
     registerUser,
     getLoginUser,
     getUserByName,
@@ -38,18 +37,6 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-
-  
-  //get all products
-  export const returnAllUsers = (req, res) => {
-    getAllUsers((err, results) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(results);
-      }
-    });
-  };
 
   export const sendMailToUser = (req, res) => {
     const MailData = req.body;

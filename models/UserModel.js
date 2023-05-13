@@ -2,17 +2,6 @@
 import db from "../config/database.js";
 
 
-//get all products
-export const getAllUsers = (result) => {
-  db.query("SELECT * FROM user", (err, results) => {
-    if (err) {
-      result(err, null);
-    } else {
-      result(null, results);
-    }
-  });
-};
-
 export const registerUser = (registrationData, result) => {
   db.query("insert into user set username = ?, passsword = ?, role = ?, blocked = ?, email = ?, firstname = ?, lastname = ?, gender = ?, fk_room = ?, occupation = ? ;"
   , [registrationData.username,registrationData.password,registrationData.role, registrationData.blocked,
