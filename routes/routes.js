@@ -16,7 +16,6 @@ const limiter = rateLimit({
 
 //import functions from controller
 import {
-  returnAllUsers,
   registerNewUser,
   returnLoginUser,
   returnUserByName,
