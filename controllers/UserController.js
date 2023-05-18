@@ -5,7 +5,6 @@ import {
     getUserByName,
     getUserInfo,
     getAllContactInformation,
-    //getUserRoom,
     blockUserById,
     updateUserInfoById,
     updateOccupationById,
@@ -26,8 +25,6 @@ var nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 dotenv.config();
-//const bcrypt = require('bcrypt');
-//const saltRounds = 10;
 
 var transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
@@ -47,17 +44,8 @@ var transporter = nodemailer.createTransport({
       text: `Jums buvo sukurta nauja paskyra bendrabučio sistemoje\nPaskyros prisijungimo vardas: ${MailData.username}\nSlaptažodis: ${MailData.password}\nPrašome pasikeisti slaptažodį prisijiungus prie bendrabučio sistemos`
     };
     
-    // transporter.sendMail(mailOptions, function(error, info){
-    //   if (error) {
-    //     console.log(error);
-    //   } else {
-        
-    //     console.log('Email sent: ' + info.response);
-    //   }
-    // });
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
-        console.log(error)
         res.send("Laiško išsiūsti nepavyko");
       } else {
         res.json("Laiškas naudotojui nusiūstas sėkmingai");
@@ -80,20 +68,6 @@ var transporter = nodemailer.createTransport({
 
   };
 
-//   export const registerNewUser = (req, res) => {
-//     const registrationData = req.body;
-// //     bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-// //     // Store hash in your password DB.
-// // });
-//     registerUser(registrationData, (err, results) => {
-//       if (err) {
-//         res.send("Registration failed");
-//       } else {
-//         res.json("Registration was sucessfull");
-//       }
-//     });
-//   };
-
   export const updateUserPassword = (req, res) => {
     const id = req.params.id
     const updateData = req.body;
@@ -102,10 +76,7 @@ var transporter = nodemailer.createTransport({
     if (err) {
      
     } else {
-      console.log(updateData.password)
-      console.log(results[0].passsword)
       bcrypt.compare(updateData.password, results[0].passsword, function(err, result) {
-        console.log(result)
         if(result == true){
           res.status(500)
           res.send("Bandoma keisti į tapatį slaptažodį");
@@ -130,19 +101,6 @@ var transporter = nodemailer.createTransport({
   }
   });
 
-    // updateUserPasswordById(updateData,id, (err, results) => {
-    //   if (err) {
-    //     res.status(501)
-    //     res.send("Slaptažodžio keitimas nepavyko");
-    //   } else {
-    //     if(results.changedRows  == 0){
-    //       res.status(500)
-    //       res.send("Bandoma keisti į tapatį slaptažodį");
-    //     }
-    //     else if(results.changedRows  == 1)
-    //     res.json("Slaptažodis pakeistas sėkmingai");
-    //   }
-    // });
   };
 
 
@@ -161,7 +119,7 @@ var transporter = nodemailer.createTransport({
                "id": results[0].user_id
             }
     
-            let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '1h' })
+            let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '10s' })
             res.json({token: jwtToken, blocked:  results[0].blocked });
             }
             else{
@@ -248,24 +206,6 @@ var transporter = nodemailer.createTransport({
     });
   };
 
-  // export const returnUserRoom = (req, res) => {
-  //   const id = req.params.id
-  //   const fk_room = req.body;
-  //   getUserRoom(id,fk_room.room,(err, results) => {
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       if(results.length > 0){
-  //         res.json(results[0])
-  //         }
-  //         else{
-  //           res.status(500)
-  //           res.json("Naudotojo kambarys nerastas")
-  //         }
-  //     }
-  //   });
-  // };
-
   export const blockUser = (req, res) => {
     const id = req.params.id
     blockUserById(id,(err, results) => {
@@ -292,7 +232,6 @@ var transporter = nodemailer.createTransport({
       } else {
         
         if(results.affectedRows > 0){
-           //res.json("Naudotojo duomenys atnaujinti sėkmingai")
            res.json(results)
           }
           else{

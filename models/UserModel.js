@@ -54,16 +54,6 @@ export const getAllContactInformation = (result) => {
   });
 };
 
-// export const getUserRoom = (id,fk_room,result) => {
-//   db.query("SELECT number from user,rooms where ? = rooms.room_id AND user.user_id = ?",[fk_room,id], (err, results) => {
-//     if (err) {
-//       result(err, null);
-//     } else {
-//       result(null, results);
-//     }
-//   });
-// };
-
 export const blockUserById = (id,result) => {
   db.query("UPDATE user set blocked = 1 where user_id = ?",[id], (err, results) => {
     if (err) {

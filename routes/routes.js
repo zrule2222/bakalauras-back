@@ -11,9 +11,6 @@ const limiter = rateLimit({
   message: "Per daug bandymų prisijungti. Pabandykite už kelių minučių",
 });
 
-// Apply the rate limiting middleware to all requests
-
-
 //import functions from controller
 import {
   registerNewUser,
