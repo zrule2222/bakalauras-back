@@ -4,7 +4,7 @@ import{
     UpdateRoomStatusIfFull,
     getUserRoom,
 } from "../models/RoomsModel.js";
-
+//return rooms that are available to register a resident in
 export const returnRoomsForRegistration = (req, res) => {
     const data = req.body;
   let  room_gender = data.room_gender
@@ -23,7 +23,7 @@ export const returnRoomsForRegistration = (req, res) => {
       }
     });
   };
-
+//update the amout of free spaces left in the room
   export const UpdateRoomSpace = (req, res) => {
     const id = req.params.id;
     UpdateRoomSpaceById(id, (err, results) => {
@@ -40,7 +40,7 @@ export const returnRoomsForRegistration = (req, res) => {
       }
     });
   };
-
+//update room status if the room has no more free space
   export const UpdateRoomStatus = (req, res) => {
     UpdateRoomStatusIfFull((err, results) => {
       if (err) {
@@ -55,7 +55,7 @@ export const returnRoomsForRegistration = (req, res) => {
       }
     });
   };
-
+ //returns user's room number
   export const returnUserRoom = (req, res) => {
     const id = req.params.id
     const fk_room = req.body;

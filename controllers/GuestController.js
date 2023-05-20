@@ -9,7 +9,7 @@ import{
     getGuestRegForAdmin,
     getGuestRegForResident,
 } from "../models/GuestModal.js";
-
+  //registers a guest for a stay at the dormitary
 export const registerNewUserGuest = (req, res) => {
     const registrationData = req.body;
     registerUserGuest(registrationData, (err, results) => {
@@ -21,7 +21,7 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
-
+//return all user guest registrations that are waiting confirmation
   export const returnUserRegistrations = (req, res) => {
     const id = req.params.id;
     getUserRegistrations(id, (err, results) => {
@@ -38,7 +38,7 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
-
+//resident cancels his guest registration
   export const cancelGuestRegistration = (req, res) => {
     const id = req.params.id;
     cancelGuestRegistrationById(id, (err, results) => {
@@ -55,7 +55,7 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
-
+//get guest registrations that are waiting confirmation
   export const returnActiveRegistrations = (req, res) => {
     getActiveRegistrations((err, results) => {
       if (err) {
@@ -71,7 +71,7 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
-
+//update guest registrations status
   export const updateGuestRegistrationStatus = (req, res) => {
     const id = req.params.id;
     const status = req.body;
@@ -94,7 +94,7 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
-
+//get guest registrations that are already confirmed
   export const returnConfirmedRegistrations = (req, res) => {
     getConfirmedRegistrations((err, results) => {
       if (err) {
@@ -110,7 +110,7 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
-
+//return guest registration history for the admin
   export const getGuestRegAdmin = (req, res) => {
     getGuestRegForAdmin((err, results) => {
       if (err) {
@@ -126,7 +126,7 @@ export const registerNewUserGuest = (req, res) => {
       }
     });
   };
-
+//return resident's guest registration history
   export const getGuestRegResident = (req, res) => {
     const id = req.params.id;
     getGuestRegForResident(id,(err, results) => {

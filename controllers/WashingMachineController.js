@@ -15,7 +15,7 @@ import{
     getWashingtRegForAdmin,
     getWashingRegForResident,
 } from "../models/WashingMachineModel.js";
-
+//returns information about all washing machines
 export const getMachineData = (req, res) => {
     getAllMachineData((err, results) => {
       if (err) {
@@ -31,7 +31,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//registers a new washing for a spesific washing machine
   export const registerNewWashing = (req, res) => {
     const registrationData = req.body;
     registerWashing(registrationData, (err, results) => {
@@ -43,7 +43,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//update washing machine with the washing registration data
   export const updateMachineStatus = (req, res) => {
     const updateData = req.body;
     const id = req.params.id;
@@ -61,7 +61,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//update washing machine status when the washing registration is finished
   export const updateMachineWhenFinished = (req, res) => {
     const id = req.params.id;
     updateMachineWhenWashingFinished(id, (err, results) => {
@@ -78,7 +78,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//set the washing registrations status to 'Užbaikta'
   export const endWashingRegistration = (req, res) => {
     const id = req.params.id;
     endWashingRegistrationById(id, (err, results) => {
@@ -95,7 +95,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+// register a washing machine failure
   export const registerNewWashingFailure = (req, res) => {
     const registrationData = req.body;
     registerWashingFailure(registrationData, (err, results) => {
@@ -107,7 +107,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//sets the washing machine's first failure registration
   export const updateMachineFailFirstReg = (req, res) => {
     const id = req.params.id;
     const registrationId = req.body.regId;
@@ -125,7 +125,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//sets the washing machine's second failure registration
   export const updateMachineFailSecondtReg = (req, res) => {
     const id = req.params.id;
     const registrationId = req.body.regId;
@@ -143,7 +143,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//sets the washing machine's third failure registration
   export const updateMachineFailThirdtReg = (req, res) => {
     const id = req.params.id;
     const registrationId = req.body.regId;
@@ -161,7 +161,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//get users that currectly have an active washing machine failure registration
   export const getUsersByFailReg = (req, res) => {
     const id = req.params.id;
     getUsersByCurrentFailReg(id,(err, results) => {
@@ -178,7 +178,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//repair a broken washing mashine
   export const fixWashingMachine = (req, res) => {
     const id = req.params.id;
     fixWashingMachineById(id, (err, results) => {
@@ -195,7 +195,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//return resident's washing machine failure registration history
   export const getMachineFailRegResident = (req, res) => {
     const id = req.params.id;
     getMachineFailRegForResident(id,(err, results) => {
@@ -212,7 +212,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//return washing machine failure registration history for the admin
   export const getMachineFailRegAdmin = (req, res) => {
     getMachineFailRegForAdmin((err, results) => {
       if (err) {
@@ -228,7 +228,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-  
+  //return washing registration history for the admin
   export const getWashingtRegAdmin = (req, res) => {
     getWashingtRegForAdmin((err, results) => {
       if (err) {
@@ -244,7 +244,7 @@ export const getMachineData = (req, res) => {
       }
     });
   };
-
+//return resident's guest washing registration history
   export const getWashingRegResident = (req, res) => {
     const id = req.params.id;
     getWashingRegForResident(id,(err, results) => {

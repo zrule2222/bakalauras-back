@@ -13,7 +13,7 @@ const require = createRequire(import.meta.url);
 
 const dotenv = require('dotenv');
 
-// get config vars
+// get config variables
 dotenv.config();
 
 //init express

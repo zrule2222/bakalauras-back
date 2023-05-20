@@ -19,13 +19,13 @@ import {
 
   import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken'); //import jwt
 
-var nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt');
-const dotenv = require('dotenv');
-dotenv.config();
-
+var nodemailer = require('nodemailer'); //import nodemailer
+const bcrypt = require('bcrypt'); //import bcrypt
+const dotenv = require('dotenv'); //import dotenv
+dotenv.config(); // get config variables
+//create mail transporter
 var transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
   auth: {
@@ -34,7 +34,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-
+//send an email to a user with the login credentials
   export const sendMailToUser = (req, res) => {
     const MailData = req.body;
     var mailOptions = {
@@ -52,7 +52,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//create a new user's account anf hash the user's password
     export const registerNewUser = (req, res) => {
     const registrationData = req.body;
     bcrypt.hash(registrationData.password,  Number(process.env.SALT_ROUNDS), function(err, hash) {
@@ -67,7 +67,7 @@ var transporter = nodemailer.createTransport({
 });
 
   };
-
+//update the password of a user with the given id
   export const updateUserPassword = (req, res) => {
     const id = req.params.id
     const updateData = req.body;
@@ -103,7 +103,7 @@ var transporter = nodemailer.createTransport({
 
   };
 
-
+// return a jwt token and the blocked status if the user logs in sucesfully
   export const returnLoginUser = (req, res) => {
     const loginData = req.body;
     getLoginUser(loginData, (err, results) => {
@@ -119,7 +119,7 @@ var transporter = nodemailer.createTransport({
                "id": results[0].user_id
             }
     
-            let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '10s' })
+            let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '1h' })
             res.json({token: jwtToken, blocked:  results[0].blocked });
             }
             else{
@@ -137,7 +137,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+  //check if user's jwt token is still valid
   export const AuthentificateUser = (req, res) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
@@ -154,7 +154,7 @@ var transporter = nodemailer.createTransport({
     })
 
     };
-
+//retuens user's id ant role by the given name
   export const returnUserByName = (req, res) => {
     const userName = req.body;
     getUserByName(userName,(err, results) => {
@@ -172,7 +172,7 @@ var transporter = nodemailer.createTransport({
     });
   };
 
-  
+   //returns user's information
   export const returnUserInfo = (req, res) => {
     const id = req.params.id
     getUserInfo(id,(err, results) => {
@@ -189,7 +189,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//returns all workers contact information
   export const returnAllContactInformation = (req, res) => {
     getAllContactInformation((err, results) => {
       if (err) {
@@ -205,7 +205,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//block a residents account
   export const blockUser = (req, res) => {
     const id = req.params.id
     blockUserById(id,(err, results) => {
@@ -222,7 +222,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//update user's email and blocked status
   export const updateUserInfo = (req, res) => {
     const id = req.params.id
     const updateData = req.body;
@@ -241,7 +241,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//sets the occupation of the worker
   export const updateOccupation = (req, res) => {
     const id = req.params.id
     const updateData = req.body;
@@ -259,7 +259,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//return the occupation of the user with the given id
   export const returnUserOccupation = (req, res) => {
     const id = req.params.id
     getUserOccupation(id,(err, results) => {
@@ -276,7 +276,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//return the admin's occupation
   export const returnAdminOccupation = (req, res) => {
     getAdminOccupation((err, results) => {
       if (err) {
@@ -292,7 +292,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//return the doorkeeper's occupation
   export const returnDoorkeeperOccupation = (req, res) => {
     getDoorkeeperOccupation((err, results) => {
       if (err) {
@@ -308,7 +308,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//check if an account with the given username exists
   export const checkIfUserExists = (req, res) => {
     const data = req.body;
     let username = data.username
@@ -326,7 +326,7 @@ var transporter = nodemailer.createTransport({
       }
     });
   };
-
+//return the name and surname of all the residents in the system
   export const getResidentsInformation = (req, res) => {
     getAllResidentsInformation((err, results) => {
       if (err) {

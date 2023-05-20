@@ -8,7 +8,7 @@ import{
     getLeisureRegForAdmin,
     getLeisurRegForResident,
 } from "../models/LeisureRoomModel.js";
-
+//save resident's leisure room registration
 export const registerNewBeingInRoom = (req, res) => {
     const registrationData = req.params.id;
     registerBeingInRoom(registrationData, (err, results) => {
@@ -20,7 +20,7 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
-
+//return leiure room registrations that are waiting confirmation
   export const returnLeisureRegistrations = (req, res) => {
     getLeisureRegistrations((err, results) => {
       if (err) {
@@ -36,7 +36,7 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
-
+//update the status of a leisure room registration
   export const updateRegistrationStatus = (req, res) => {
     const id = req.params.id;
     const data = req.body;
@@ -58,7 +58,7 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
-
+//return the name and surname of the resident's that currently have a confirmed registration
   export const returnLeisureRoomData = (req, res) => {
     getLeisureRoomData((err, results) => {
       if (err) {
@@ -74,7 +74,7 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
-
+//return a user's leisure room registration that is waiting confirmation or is confirmed
   export const returnUserLeisureRegistration = (req, res) => {
     const id = req.params.id;
     getUserLeisureRegistration(id,(err, results) => {
@@ -91,7 +91,7 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
-
+//resident updates his leisure room registration status to canceled or finished
   export const updateUserLeisureRegistration = (req, res) => {
     const id = req.params.id;
     const data = req.body;
@@ -112,7 +112,7 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
-
+//return leisure room registration history for the admin
   export const getLeisureRegAdmin = (req, res) => {
     getLeisureRegForAdmin((err, results) => {
       if (err) {
@@ -128,7 +128,7 @@ export const registerNewBeingInRoom = (req, res) => {
       }
     });
   };
-
+//return resident's guest leisure room registration history
   export const getLeisurRegResident = (req, res) => {
     const id = req.params.id;
     getLeisurRegForResident(id,(err, results) => {
