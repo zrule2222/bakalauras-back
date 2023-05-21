@@ -40,28 +40,28 @@ var transporter = nodemailer.createTransport({
     var mailOptions = {
       from: process.env.EMAIL_NAME,
       to: MailData.userMail,
-      subject: 'Naujai sukurta bendrabučio paskyrą',
+      subject: 'Naujai sukurta bendrabučio paskyra',
       text: `Jums buvo sukurta nauja paskyra bendrabučio sistemoje\nPaskyros prisijungimo vardas: ${MailData.username}\nSlaptažodis: ${MailData.password}\nPrašome pasikeisti slaptažodį prisijiungus prie bendrabučio sistemos`
     };
     
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
-        res.send("Laiško išsiūsti nepavyko");
+        res.send("Laiško išsiųsti nepavyko");
       } else {
-        res.json("Laiškas naudotojui nusiūstas sėkmingai");
+        res.json("Laiškas naudotojui nusiųstas sėkmingai");
       }
     });
   };
-//create a new user's account anf hash the user's password
+//create a new user's account and hash the user's password
     export const registerNewUser = (req, res) => {
     const registrationData = req.body;
     bcrypt.hash(registrationData.password,  Number(process.env.SALT_ROUNDS), function(err, hash) {
       registrationData.password = hash
       registerUser(registrationData, (err, results) => {
         if (err) {
-          res.send("Registration failed");
+          res.send("Registracija nepavyko");
         } else {
-          res.json("Registration was sucessfull");
+          res.json("Registracija buvo sėkminga");
         }
       });
 });
@@ -79,7 +79,7 @@ var transporter = nodemailer.createTransport({
       bcrypt.compare(updateData.password, results[0].passsword, function(err, result) {
         if(result == true){
           res.status(500)
-          res.send("Bandoma keisti į tapatį slaptažodį");
+          res.send("Bandoma keisti į tą patį slaptažodį");
           
         }
         else{
@@ -184,7 +184,7 @@ var transporter = nodemailer.createTransport({
         }
         else{
           res.status(500)
-          res.json("no user data found")
+          res.json("Naudotojo informacija nerasta")
         }
       }
     });

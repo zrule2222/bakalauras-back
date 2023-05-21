@@ -15,7 +15,7 @@ export const registerUser = (registrationData, result) => {
 };
 //check if a user with the given username exists
 export const getLoginUser = (loginData,result) => {
-  db.query("SELECT * FROM user where username = ?",[loginData.username], (err, results) => {
+  db.query("SELECT * FROM user where username = BINARY ?",[loginData.username], (err, results) => {
     if (err) {
       result(err, null);
     } else {
@@ -45,7 +45,7 @@ export const getUserInfo = (id,result) => {
 };
 //returns all workers contact information
 export const getAllContactInformation = (result) => {
-  db.query("SELECT username,role,blocked,email,firstname,lastname,gender,fk_room,occupation FROM user where role = 'Administratorius' or role = 'Budėtojas' ", (err, results) => {
+  db.query("SELECT username,role,blocked,email,firstname,lastname,gender,fk_room,occupation FROM user where role = 'Administratorius' union all SELECT username,role,blocked,email,firstname,lastname,gender,fk_room,occupation FROM user where role = 'Budėtojas'", (err, results) => {
     if (err) {
       result(err, null);
     } else {
@@ -137,7 +137,7 @@ export const checkIfUserExistsByName = (username,result) => {
 };
 //return the name and surname of all the residents in the system
 export const getAllResidentsInformation = (result) => {
-  db.query("SELECT user_id,firstname,lastname,username FROM user where role = 'Gyventojas'", (err, results) => {
+  db.query("SELECT user_id,firstname,lastname,username FROM user where role = 'Gyventojas' ORDER BY firstname, lastname", (err, results) => {
     if (err) {
       result(err, null);
     } else {

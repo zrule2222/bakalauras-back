@@ -12,7 +12,7 @@ export const registerBeingInRoom = (registrationData, result) => {
   };
 //return leiure room registrations that are waiting confirmation
   export const getLeisureRegistrations = (result) => {
-    db.query("select firstname, lastname, leisure_id, leisure_status, leisure_room_registrations.waiting_confirmation_at from leisure_room_registrations join user ON user.user_id = leisure_room_registrations.fk_user where leisure_room_registrations.leisure_status = 'Laukiama patvirtinimo'"
+    db.query("select firstname, lastname, leisure_id, leisure_status, leisure_room_registrations.waiting_confirmation_at from leisure_room_registrations join user ON user.user_id = leisure_room_registrations.fk_user where leisure_room_registrations.leisure_status = 'Laukiama patvirtinimo' order by waiting_confirmation_at"
     , (err, results) => {
       if (err) {
         result(err, null);

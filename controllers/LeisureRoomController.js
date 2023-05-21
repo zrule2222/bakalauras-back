@@ -13,7 +13,7 @@ export const registerNewBeingInRoom = (req, res) => {
     const registrationData = req.params.id;
     registerBeingInRoom(registrationData, (err, results) => {
       if (err) {
-        res.send("Registration nepavyko");
+        res.send("Laisvalaikio kambario registracija nebuvo sėkminga");
       } else {
         
         res.json("Laisvalaikio kambario registracija sėkminga");
@@ -69,7 +69,7 @@ export const registerNewBeingInRoom = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("Nėra patvirtintų laisvalaikio kambario registracijų ")
+              res.json("Nėra patvirtintų laisvalaikio kambario registracijų")
             }
       }
     });
@@ -123,7 +123,7 @@ export const registerNewBeingInRoom = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojų laisvalaikio kambario registracijų")
+              res.json("Nepavyko gauti gyventojų laisvalaikio kambario registracijų")
             }
       }
     });

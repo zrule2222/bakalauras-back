@@ -159,7 +159,7 @@ router.post("/registerWashing", registerNewWashing);
 router.put("/updatemachine/:id", updateMachineStatus);
 //update washing machine status when the washing registration is finished
 router.put("/finishMachine/:id", updateMachineWhenFinished);
-//set the washing registrations status to 'Užbaikta'
+//set the washing registrations status to 'Užbaigta'
 router.put("/finishWashing/:id", endWashingRegistration);
 //register a washing machine failure
 router.post("/registerFailure", registerNewWashingFailure);

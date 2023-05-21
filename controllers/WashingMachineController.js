@@ -26,7 +26,7 @@ export const getMachineData = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti skalbimo mašinų informacijos")
+              res.json("Nepavyko gauti skalbimo mašinų informacijos")
             }
       }
     });
@@ -56,7 +56,7 @@ export const getMachineData = (req, res) => {
            }
            else{
              res.status(500)
-             res.json("Nepavyko atnaujinti Skalbimo mašinos statuso")
+             res.json("Nepavyko atnaujinti skalbimo mašinos statuso")
            }
       }
     });
@@ -73,12 +73,12 @@ export const getMachineData = (req, res) => {
            }
            else{
              res.status(500)
-             res.json("Nepavyko atnaujinti Skalbimo mašinos statuso")
+             res.json("Nepavyko atnaujinti skalbimo mašinos statuso")
            }
       }
     });
   };
-//set the washing registrations status to 'Užbaikta'
+//set the washing registrations status to 'Užbaigta'
   export const endWashingRegistration = (req, res) => {
     const id = req.params.id;
     endWashingRegistrationById(id, (err, results) => {
@@ -86,11 +86,11 @@ export const getMachineData = (req, res) => {
         res.send(err);
       } else {
         if(results.affectedRows > 0){
-            res.json("Skalbimo Registracija užbaikta sėkmingai")
+            res.json("Skalbimo Registracija užbaigta sėkmingai")
            }
            else{
              res.status(500)
-             res.json("Nepavyko užbaikti skalbimo registracijos")
+             res.json("Nepavyko užbaigti skalbimo registracijos")
            }
       }
     });
@@ -173,7 +173,7 @@ export const getMachineData = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti naudotojų šiuo metu pateikusių gedimą")
+              res.json("Nepavyko gauti naudotojų, kurie šiuo metu yra pateikę gedimą")
             }
       }
     });
@@ -207,7 +207,7 @@ export const getMachineData = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojo skalbimo mašinų registracijų")
+              res.json("Nepavyko gauti gyventojo skalbimo mašinų registracijų")
             }
       }
     });
@@ -223,7 +223,7 @@ export const getMachineData = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojo skalbimo mašinų registracijų")
+              res.json("Nepavyko gauti gyventojo skalbimo mašinų registracijų")
             }
       }
     });
@@ -239,7 +239,7 @@ export const getMachineData = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojo svečių registracijų")
+              res.json("Nepavyko gauti gyventojo skalbimo registracijų")
             }
       }
     });
@@ -256,7 +256,7 @@ export const getMachineData = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojo skalbimo registracijų")
+              res.json("Nepavyko gauti gyventojo skalbimo registracijų")
             }
       }
     });

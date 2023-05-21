@@ -14,10 +14,10 @@ export const registerNewUserGuest = (req, res) => {
     const registrationData = req.body;
     registerUserGuest(registrationData, (err, results) => {
       if (err) {
-        res.send("Registration failed");
+        res.send("Svečio registracija nebuvo sėkminga");
       } else {
         //res.json(results)
-        res.json("Gues registration was sucessfull");
+        res.json("Svečio registracija buvo sėkminga");
       }
     });
   };
@@ -121,7 +121,7 @@ export const registerNewUserGuest = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojo svečių registracijų")
+              res.json("Nepavyko gauti gyventojo svečių registracijų")
             }
       }
     });
@@ -138,7 +138,7 @@ export const registerNewUserGuest = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojo svečių registracijų")
+              res.json("Nepavyko gauti gyventojo svečių registracijų")
             }
       }
     });

@@ -12,7 +12,7 @@ export const registerUserGuest = (registrationData, result) => {
   };
 //return all user guest registrations that are waiting confirmation
   export const getUserRegistrations = (id, result) => {
-    db.query("select  * FROM guest_registrations where fk_user = ? and status = 'Laukiama patvirtinimo' ", [id], (err, results) => {
+    db.query("select  * FROM guest_registrations where fk_user = ? and status = 'Laukiama patvirtinimo' order by guest_arrival ", [id], (err, results) => {
       if (err) {
         result(err, null);
       } else {
@@ -32,7 +32,7 @@ export const registerUserGuest = (registrationData, result) => {
   };
 //get guest registrations that are waiting confirmation
   export const getActiveRegistrations = (result) => {
-    db.query("select  * FROM guest_registrations where status = 'Laukiama patvirtinimo' ", (err, results) => {
+    db.query("select  * FROM guest_registrations where status = 'Laukiama patvirtinimo' order by guest_arrival ", (err, results) => {
       if (err) {
         result(err, null);
       } else {
@@ -53,7 +53,7 @@ export const registerUserGuest = (registrationData, result) => {
   };
 //get guest registrations that are already confirmed
   export const getConfirmedRegistrations = (result) => {
-    db.query("select  * FROM guest_registrations where status = 'Patvirtinta' ", (err, results) => {
+    db.query("select  * FROM guest_registrations where status = 'Patvirtinta' order by confirmed_at", (err, results) => {
       if (err) {
         result(err, null);
       } else {
