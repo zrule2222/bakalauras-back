@@ -82,3 +82,14 @@ export const registerUserGuest = (registrationData, result) => {
       }
     });
   };
+
+  //update guest registration arrival time
+  export const updateGuestRegistrationTimeById = (id,updateData, result) => {
+    db.query("UPDATE guest_registrations SET guest_arrival = ? where guest_id = ?", [new Date(updateData.arrival),id], (err, results) => {
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    });
+  };

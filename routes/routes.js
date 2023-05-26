@@ -45,6 +45,7 @@ import {
   returnConfirmedRegistrations,
   getGuestRegAdmin,
   getGuestRegResident,
+  updateGuestRegistrationTime,
 } from "../controllers/GuestController.js"
 import {
   registerNewBeingInRoom,
@@ -189,7 +190,8 @@ router.get("/leisureRegResident/:id", getLeisurRegResident)
 router.get("/washingRegAdmin", getWashingtRegAdmin);
 //return resident's guest washing registration history
 router.get("/washingRegResident/:id", getWashingRegResident)
-
+  //update guest registration arrival time
+router.put("/updateGuestArrival/:id", updateGuestRegistrationTime)
 
 
 

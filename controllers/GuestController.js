@@ -8,6 +8,7 @@ import{
     getConfirmedRegistrations,
     getGuestRegForAdmin,
     getGuestRegForResident,
+    updateGuestRegistrationTimeById,
 } from "../models/GuestModal.js";
   //registers a guest for a stay at the dormitary
 export const registerNewUserGuest = (req, res) => {
@@ -144,5 +145,22 @@ export const registerNewUserGuest = (req, res) => {
     });
   };
 
-
+  //update guest registration arrival time
+  export const updateGuestRegistrationTime = (req, res) => {
+    const id = req.params.id;
+    const updateData = req.body;
+    updateGuestRegistrationTimeById(id,updateData,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.affectedRows > 0){
+          res.json("Registracijos laikas atnaujintas sėkmingai")
+         }
+         else{
+           res.status(500)
+           res.json("Nepavyko atnaujinti svečio registracijos laiko")
+         }
+      }
+    });
+  };
  
