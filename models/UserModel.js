@@ -157,6 +157,17 @@ export const getUserPasswordById = (id,result) => {
   });
 };
 
+ //returns user's blocked status
+ export const getUserBlockedStatusById = (id,result) => {
+  db.query("SELECT blocked FROM user where user_id = ?", [id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
 
 
 

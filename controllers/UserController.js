@@ -15,6 +15,7 @@ import {
     getAllResidentsInformation,
     updateUserPasswordById,
     getUserPasswordById,
+    getUserBlockedStatusById,
   } from "../models/UserModel.js";
 
   import { createRequire } from 'module';
@@ -116,7 +117,8 @@ var transporter = nodemailer.createTransport({
               let rez = {
               "username": results[0].username,
               "role":results[0].role,
-               "id": results[0].user_id
+               "id": results[0].user_id,
+               "blocked": results[0].blocked
             }
     
             let jwtToken = jwt.sign(rez, process.env.TOKEN_SECRET, { expiresIn: '1h' })
@@ -344,4 +346,21 @@ var transporter = nodemailer.createTransport({
   };
 
 
+  //returns user's blocked status
+  export const getUserBlockedStatus = (req, res) => {
+    const id = req.params.id
+    getUserBlockedStatusById(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          res.json(results)
+          }
+          else{
+            res.status(500)
+            res.json("Nepavyko gauti gyventojo užblokavimo statuso")
+          }
+      }
+    });
+  };
 

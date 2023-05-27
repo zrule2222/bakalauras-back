@@ -29,6 +29,7 @@ import {
   getResidentsInformation,
   sendMailToUser,
   updateUserPassword,
+  getUserBlockedStatus,
  // returnUserRoom
 } from "../controllers/UserController.js";
 
@@ -192,6 +193,8 @@ router.get("/washingRegAdmin", getWashingtRegAdmin);
 router.get("/washingRegResident/:id", getWashingRegResident)
   //update guest registration arrival time
 router.put("/updateGuestArrival/:id", updateGuestRegistrationTime)
+  //returns user's blocked status
+router.get("/getUserBlockedStatus/:id", getUserBlockedStatus)
 
 
 
