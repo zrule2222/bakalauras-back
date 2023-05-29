@@ -34,7 +34,7 @@ export const registerBeingInRoom = (registrationData, result) => {
   };
 //return the name and surname of the resident's that currently have a confirmed registration
   export const getLeisureRoomData = (result) => {
-    db.query("select firstname, lastname from leisure_room_registrations join user ON user.user_id = leisure_room_registrations.fk_user where leisure_status = 'Patvirtinta'"
+    db.query("select firstname, lastname, confirmed_at from leisure_room_registrations join user ON user.user_id = leisure_room_registrations.fk_user where leisure_status = 'Patvirtinta'"
     , (err, results) => {
       if (err) {
         result(err, null);
