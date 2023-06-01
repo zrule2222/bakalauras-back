@@ -30,6 +30,8 @@ import {
   sendMailToUser,
   updateUserPassword,
   getUserBlockedStatus,
+  setEditStatus,
+  getEditStatus,
  // returnUserRoom
 } from "../controllers/UserController.js";
 
@@ -195,6 +197,8 @@ router.get("/washingRegResident/:id", getWashingRegResident)
 router.put("/updateGuestArrival/:id", updateGuestRegistrationTime)
   //returns user's blocked status
 router.get("/getUserBlockedStatus/:id", getUserBlockedStatus)
+router.put("/setEditStatus/:id", setEditStatus)
+router.get("/getEditStatus/:id", getEditStatus)
 
 
 

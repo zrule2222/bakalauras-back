@@ -168,6 +168,28 @@ export const getUserPasswordById = (id,result) => {
   });
 };
 
+ //updates user's information editing status
+ export const setEditStatusById = (editingStatus,id,result) => {
+  db.query("UPDATE user set editing_data = ? where user_id = ?", [editingStatus,id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+ //returns user's information editing statu
+ export const getEditStatusById = (id,result) => {
+  db.query("SELECT editing_data FROM user where user_id = ?", [id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
 
 
 

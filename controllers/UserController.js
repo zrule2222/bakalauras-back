@@ -16,6 +16,8 @@ import {
     updateUserPasswordById,
     getUserPasswordById,
     getUserBlockedStatusById,
+    setEditStatusById,
+    getEditStatusById,
   } from "../models/UserModel.js";
 
   import { createRequire } from 'module';
@@ -364,3 +366,39 @@ var transporter = nodemailer.createTransport({
     });
   };
 
+//sets the occupation of the worker
+export const setEditStatus = (req, res) => {
+  const id = req.params.id
+  const editingStatus = req.body.status;
+  setEditStatusById(editingStatus,id,(err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      if(results.affectedRows > 0){
+        res.json("Statusas atnaujintas sėkmingai")
+        }
+        else{
+          res.status(500)
+          res.json("Nepavyko atnaujinti statuso")
+        }
+    }
+  });
+};
+
+  //returns user's blocked status
+  export const getEditStatus = (req, res) => {
+    const id = req.params.id
+    getEditStatusById(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          res.json(results[0])
+          }
+          else{
+            res.status(500)
+            res.json("Nepavyko gauti gyventojo informacijos keitimo statuso")
+          }
+      }
+    });
+  };
