@@ -32,6 +32,8 @@ import {
   getUserBlockedStatus,
   setEditStatus,
   getEditStatus,
+  checkActivationToken,
+  setActivationAsDone,
  // returnUserRoom
 } from "../controllers/UserController.js";
 
@@ -199,6 +201,8 @@ router.put("/updateGuestArrival/:id", updateGuestRegistrationTime)
 router.get("/getUserBlockedStatus/:id", getUserBlockedStatus)
 router.put("/setEditStatus/:id", setEditStatus)
 router.get("/getEditStatus/:id", getEditStatus)
+router.post("/checkActivationToken", checkActivationToken)
+router.put("/activationDone/:id", setActivationAsDone)
 
 
 

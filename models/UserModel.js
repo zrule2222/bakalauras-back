@@ -3,8 +3,8 @@ import db from "../config/database.js";
 
 //create a new user's account
 export const registerUser = (registrationData, result) => {
-  db.query("insert into user set username = ?, passsword = ?, role = ?, blocked = ?, email = ?, firstname = ?, lastname = ?, gender = ?, fk_room = ?, occupation = ? ;"
-  , [registrationData.username,registrationData.password,registrationData.role, registrationData.blocked,
+  db.query("insert into user set username = ?, role = ?, blocked = ?, email = ?, firstname = ?, lastname = ?, gender = ?, fk_room = ?, occupation = ? ;"
+  , [registrationData.username,registrationData.role, registrationData.blocked,
      registrationData.email,registrationData.firstname, registrationData.lastname, registrationData.gender, registrationData.room, registrationData.occupation], (err, results) => {
     if (err) {
       result(err, null);
@@ -189,6 +189,38 @@ export const getUserPasswordById = (id,result) => {
     }
   });
 };
+
+export const setUserActivationTokenByName = (token,username,result) => {
+  db.query("UPDATE user set activation_token = ? where username = ?", [token,username], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const checkForActivationToken = (token,result) => {
+  db.query("SELECT user_id FROM user where activation_token = ?", [token], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const setActivationAsDoneById = (id,result) => {
+  db.query("UPDATE user set activation_token = null where user_id = ?", [id], (err, results) => {
+    if (err) {
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+
 
 
 

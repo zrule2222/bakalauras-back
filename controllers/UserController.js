@@ -18,6 +18,9 @@ import {
     getUserBlockedStatusById,
     setEditStatusById,
     getEditStatusById,
+    setUserActivationTokenByName,
+    checkForActivationToken,
+    setActivationAsDoneById,
   } from "../models/UserModel.js";
 
   import { createRequire } from 'module';
@@ -44,7 +47,9 @@ var transporter = nodemailer.createTransport({
       from: process.env.EMAIL_NAME,
       to: MailData.userMail,
       subject: 'Naujai sukurta bendrabučio paskyra',
-      text: `Jums buvo sukurta nauja paskyra bendrabučio sistemoje\nPaskyros prisijungimo vardas: ${MailData.username}\nSlaptažodis: ${MailData.password}\nPrašome pasikeisti slaptažodį prisijiungus prie bendrabučio sistemos.`
+      html: `<p>Jums buvo sukurta nauja paskyra bendrabučio sistemoje, kuria galite aktivuoti paspaudę žemiau esančia nuoroda:\n</p>
+      <a href=https://dormitory:8080/activate/${MailData.token}> Aktivuokite paskyrą čia</a>
+      <p>Paskyros prisijungimo vardas: ${MailData.username}</p>`
     };
     
     transporter.sendMail(mailOptions, function(error, info){
@@ -62,9 +67,16 @@ var transporter = nodemailer.createTransport({
       registrationData.password = hash
       registerUser(registrationData, (err, results) => {
         if (err) {
-          res.send("Registracija nepavyko");
+          res.send(err);
         } else {
-          res.json("Registracija buvo sėkminga");
+          let jwtToken = jwt.sign({message: "activation token"},process.env.TOKEN_SECRET, { expiresIn: '24h' })
+          setUserActivationTokenByName(jwtToken,registrationData.username, (err, results) => {
+            if (err) {
+              res.send("Žetono sugeneruoti nepavyko");
+            } else{
+          res.json(jwtToken);
+            }
+          })
         }
       });
 });
@@ -398,6 +410,48 @@ export const setEditStatus = (req, res) => {
           else{
             res.status(500)
             res.json("Nepavyko gauti gyventojo informacijos keitimo statuso")
+          }
+      }
+    });
+  };
+
+
+  export const checkActivationToken = (req, res) => {
+    const token = req.body.token
+    checkForActivationToken(token,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.length > 0){
+          jwt.verify(token, process.env.TOKEN_SECRET, function(err, decoded) {
+            if (err) {
+              res.sendStatus(401)
+            }
+            else{
+              res.json(results[0])
+            }
+          })
+          }
+          else{
+            res.status(500)
+            res.json("Nerastas gyventojas su nurodytu aktyvavimo žetonu")
+          }
+      }
+    });
+  };
+
+  export const setActivationAsDone = (req, res) => {
+    const id = req.params.id
+    setActivationAsDoneById(id,(err, results) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if(results.affectedRows > 0){
+          res.json("Paskyra aktyvuota sėkmingai")
+          }
+          else{
+            res.status(500)
+            res.json("Paskyros aktyvuoti nepavyko")
           }
       }
     });
