@@ -47,7 +47,7 @@ var transporter = nodemailer.createTransport({
       from: process.env.EMAIL_NAME,
       to: MailData.userMail,
       subject: 'Naujai sukurta bendrabučio paskyra',
-      html: `<p>Jums buvo sukurta nauja paskyra bendrabučio sistemoje, kuria galite aktivuoti paspaudę žemiau esančia nuoroda:\n</p>
+      html: `<p>Jums buvo sukurta nauja paskyra bendrabučio sistemoje, kuria turite aktivuoti <b>per 24 valandas</b> paspaudę žemiau esančia nuoroda:\n</p>
       <a href=https://dormitory:8080/activate/${MailData.token}> Aktivuokite paskyrą čia</a>
       <p>Paskyros prisijungimo vardas: ${MailData.username}</p>`
     };
