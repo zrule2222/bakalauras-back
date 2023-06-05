@@ -140,7 +140,7 @@ export const registerNewBeingInRoom = (req, res) => {
             }
             else{
               res.status(500)
-              res.json("nepavyko gauti gyventojų laisvalaikio kambario registracijų")
+              res.json("Nepavyko gauti gyventojų laisvalaikio kambario registracijų")
             }
       }
     });

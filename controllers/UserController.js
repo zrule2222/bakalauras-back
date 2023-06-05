@@ -46,8 +46,8 @@ var transporter = nodemailer.createTransport({
     var mailOptions = {
       from: process.env.EMAIL_NAME,
       to: MailData.userMail,
-      subject: 'Naujai sukurta bendrabučio paskyra',
-      html: `<p>Jums buvo sukurta nauja paskyra bendrabučio sistemoje, kuria turite aktivuoti <b>per 24 valandas</b> paspaudę žemiau esančia nuoroda:\n</p>
+      subject: 'Naujai sukurta bendrabučio informacinės sistemos paskyra',
+      html: `<p>Jums buvo sukurta nauja paskyra bendrabučio informacinėje sistemoje.<br>Jeigu norite prisijungti prie sistemos, aktyvuokite jums sukurtą paskyrą <b>per 12 valandas</b> paspaudę žemiau esančią nuorodą:\n</p>
       <a href=https://dormitory:8080/activate/${MailData.token}> Aktivuokite paskyrą čia</a>
       <p>Paskyros prisijungimo vardas: ${MailData.username}</p>`
     };
@@ -69,7 +69,7 @@ var transporter = nodemailer.createTransport({
         if (err) {
           res.send(err);
         } else {
-          let jwtToken = jwt.sign({message: "activation token"},process.env.TOKEN_SECRET, { expiresIn: '24h' })
+          let jwtToken = jwt.sign({message: "activation token"},process.env.TOKEN_SECRET, { expiresIn: '12h' })
           setUserActivationTokenByName(jwtToken,registrationData.username, (err, results) => {
             if (err) {
               res.send("Žetono sugeneruoti nepavyko");
